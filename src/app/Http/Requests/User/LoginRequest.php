@@ -4,7 +4,6 @@ namespace App\Http\Requests\User;
 
 use App\Http\Requests\AbstractRequest;
 use App\Models\User;
-use App\Rules\Password;
 
 class LoginRequest extends AbstractRequest
 {
@@ -23,6 +22,4 @@ class LoginRequest extends AbstractRequest
             User::PASSWORD_ATTRIBUTE => ['string','required'],
         ];
     }
-
-
 }

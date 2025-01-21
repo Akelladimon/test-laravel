@@ -1,0 +1,257 @@
+openapi: 3.0.3
+info:
+  title: Signature
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/document:
+    post:
+      summary: 'Upload a document.'
+      operationId: uploadADocument
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Document management'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                document:
+                  type: string
+                  format: binary
+                  description: 'PDF document.'
+                  nullable: false
+              required:
+                - document
+  /api/document/sign:
+    post:
+      summary: 'Sign Document a document.'
+      operationId: signDocumentADocument
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Document management'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                document_id:
+                  type: string
+                  description: 'document id .'
+                  example: ut
+                  nullable: false
+                signature:
+                  type: string
+                  format: binary
+                  description: image.
+                  nullable: false
+                receiver_id:
+                  type: string
+                  description: 'receiver id .'
+                  example: et
+                  nullable: false
+                positionX:
+                  type: number
+                  description: 'position X.'
+                  example: 27.8
+                  nullable: false
+                positionY:
+                  type: number
+                  description: 'position Y.'
+                  example: 443730390.14532
+                  nullable: false
+                positionW:
+                  type: number
+                  description: 'position W.'
+                  example: 452.162397463
+                  nullable: false
+              required:
+                - document_id
+                - signature
+                - receiver_id
+  /api/signature-requests:
+    post:
+      summary: ''
+      operationId: postApiSignatureRequests
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Signature Request management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                receiver_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the users table.'
+                  example: porro
+                  nullable: false
+                document_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the documents table.'
+                  example: laboriosam
+                  nullable: false
+              required:
+                - receiver_id
+                - document_id
+    get:
+      summary: ''
+      operationId: getApiSignatureRequests
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - 'Signature Request management'
+  '/api/signature-requests/{signatureRequest_id}':
+    patch:
+      summary: ''
+      operationId: patchApiSignatureRequestsSignatureRequest_id
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Signature Request management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: ''
+                  example: declined
+                  nullable: false
+                  enum:
+                    - signed
+                    - declined
+              required:
+                - status
+    parameters:
+      -
+        in: path
+        name: signatureRequest_id
+        description: 'The ID of the signatureRequest.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/auth/login:
+    post:
+      summary: 'Login the user and return the API token.'
+      operationId: loginTheUserAndReturnTheAPIToken
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'User management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: parisian.misty@example.net
+                  nullable: false
+                password:
+                  type: string
+                  description: ''
+                  example: 'I<<KBv''T0r[\J"'
+                  nullable: false
+              required:
+                - email
+                - password
+      security: []
+  /api/auth/register:
+    post:
+      summary: 'Register a new user.'
+      operationId: registerANewUser
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'User management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: velit
+                  nullable: false
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: zadams@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: ''
+                  example: "qZ7G]gT'|WViV#"
+                  nullable: false
+                password_confirmation:
+                  type: string
+                  description: ''
+                  example: ab
+                  nullable: false
+              required:
+                - name
+                - email
+                - password
+                - password_confirmation
+      security: []
+tags:
+  -
+    name: 'Document management'
+    description: ''
+  -
+    name: 'Signature Request management'
+    description: ''
+  -
+    name: 'User management'
+    description: "\nAPIs for Auth users"
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.'
+security:
+  -
+    default: []

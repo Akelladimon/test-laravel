@@ -3,8 +3,8 @@
 ### Project Structure
 
 - `docker` - Folder for all configuration files for docker and other services
-    - `nginx` - Folder for nginx configuration files
-    - `php` - Folder for php configuration files
+- `nginx` - Folder for nginx configuration files
+- `php` - Folder for php configuration files
 - `src` - Folder where the project code will be stored
 - `docker-compose.yml` - Docker compose configuration file
 
@@ -22,8 +22,8 @@
 - In docker-compose.yml, change the data to access the database
 
   ```
-  MYSQL_DATABASE: laraveldb
-  MYSQL_USER: laravel
+  MYSQL_DATABASE: signaturedb
+  MYSQL_USER: signature
   MYSQL_PASSWORD: secret
   MYSQL_ROOT_PASSWORD: secret
   ```
@@ -36,13 +36,15 @@
   docker compose build
   ```
 
-#### 3. Create a Laravel Project
+#### 3. Run a Laravel Project
 
 -  Run this command:
 
-  ```
-  docker compose run --rm composer create-project laravel/laravel .
-  ```
+ ```bash
+docker exec -t -i signature_php /bin/bash
+composer install
+php artisan scribe:generate
+```
 
 - After running this command, the project code should appear in the src folder.
 
@@ -57,6 +59,10 @@
   ```
   http://localhost
   ```
+- Use Doc 
+ ```
+ http://localhost/docs
+  ```
 
 #### 4. Configure Laravel project 
  
@@ -66,8 +72,8 @@
   DB_CONNECTION=mysql       # connection name, we use mysql
   DB_HOST=mysql             # name of mysql service in docker-compose.yml
   DB_PORT=3306              # mysql standart port 
-  DB_DATABASE=laraveldb     # database name from MYSQL_DATABASE in docker-compose.yml
-  DB_USERNAME=laravel       # username from MYSQL_USER in docker-compose.yml
+  DB_DATABASE=signaturedb     # database name from MYSQL_DATABASE in docker-compose.yml
+  DB_USERNAME=signature       # username from MYSQL_USER in docker-compose.yml
   DB_PASSWORD=secret        # user password from MYSQL_PASSWORD in docker-compose.yml
   ```
 - Restart all services
@@ -95,5 +101,5 @@
 
   ```
   docker compose run --rm php /bin/sh
-  chown -R laravel:laravel /var/www/html
+  chown -R laravel:signature /var/www/html
   ```

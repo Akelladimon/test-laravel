@@ -5,7 +5,7 @@ namespace App\Http\Requests\User;
 use App\Http\Requests\AbstractRequest;
 use App\Models\User;
 
-class LoginRequest extends AbstractRequest
+class RegisterRequest extends AbstractRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,8 +18,10 @@ class LoginRequest extends AbstractRequest
     public function rules(): array
     {
         return [
-            User::EMAIL_ATTRIBUTE => 'required|email',
-            User::PASSWORD_ATTRIBUTE => ['string','required'],
+            User::NAME_ATTRIBUTE => ['string', 'required'],
+            User::EMAIL_ATTRIBUTE => ['email', 'required'],
+            User::PASSWORD_ATTRIBUTE => ['string', 'required'],
+            User::PASSWORD_CONFIRMATION_FIELD => ['string', 'required'],
         ];
     }
 }
